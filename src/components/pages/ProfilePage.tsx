@@ -1,7 +1,8 @@
 // src/components/pages/ProfilePage.tsx
+
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { updateProfile, storage, ref, uploadBytes, getDownloadURL } from '../../firebase';
+import { updateProfile as firebaseUpdateProfile, storage, ref, uploadBytes, getDownloadURL } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
@@ -24,21 +25,28 @@ const ProfilePage: React.FC = () => {
 
   const onDrop = (acceptedFiles: File[]) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
-      setPhotoFile(acceptedFiles[0]);
-
-      // Display a preview
       const file = acceptedFiles[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPhotoURL(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      if (file.type.startsWith('image/')) {
+        setPhotoFile(file);
+
+        // Display a preview
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPhotoURL(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        toast.error('Please upload a valid image file.', {
+          position: 'top-right',
+          autoClose: 5000,
+        });
+      }
     }
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: 'image/*',
+    accept: { 'image/*': [] }, // Corrected accept prop
     multiple: false,
   });
 
@@ -54,17 +62,23 @@ const ProfilePage: React.FC = () => {
         const storageRef = ref(storage, `avatars/${currentUser.uid}/${photoFile.name}`);
         const snapshot = await uploadBytes(storageRef, photoFile);
         newPhotoURL = await getDownloadURL(snapshot.ref);
+
+        // Show photo upload success toast
+        toast.success('Profile photo updated successfully!', {
+          position: 'top-right',
+          autoClose: 5000,
+        });
       }
 
       // Update the user's profile
-      await updateProfile(currentUser, {
+      await firebaseUpdateProfile(currentUser, {
         displayName,
         photoURL: newPhotoURL,
       });
 
       setPhotoURL(newPhotoURL);
 
-      // Show success toast
+      // Show profile update success toast
       toast.success('Profile updated successfully!', {
         position: 'top-right',
         autoClose: 5000,
@@ -108,7 +122,7 @@ const ProfilePage: React.FC = () => {
                 : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
             }`}
           >
-            <input {...getInputProps()} />
+            <input {...getInputProps()} aria-label="Avatar Image Upload" />
             {isDragActive ? (
               <p className="text-green-600">Drop the image here...</p>
             ) : (
@@ -127,6 +141,7 @@ const ProfilePage: React.FC = () => {
           type="submit"
           className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-50"
           disabled={isLoading}
+          aria-label="Update Profile"
         >
           {isLoading ? 'Updating...' : 'Update Profile'}
         </button>

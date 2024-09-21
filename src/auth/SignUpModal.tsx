@@ -1,6 +1,5 @@
-// src/auth/SignUpModal.tsx
 import React, { useState } from 'react';
-import { X } from 'lucide-react'; // Ensure you have lucide-react installed or use any close icon
+import { X } from 'lucide-react';
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +30,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSwitchToSignIn }) 
       await createUserWithEmailAndPassword(auth, email, password);
       setError('');
       onClose();
-      navigate('/'); // Redirect to home or dashboard after sign-up
+      navigate('/');
     } catch (err: any) {
       setError(err.message);
     }

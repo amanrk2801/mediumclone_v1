@@ -1,4 +1,3 @@
-// src/auth/AuthModals.tsx
 import React, { useState, useEffect } from 'react';
 import SignInModal from './SignInModal';
 import SignUpModal from './SignUpModal';
@@ -6,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 
 interface AuthModalsProps {
   initialView: 'signin' | 'signup';
+  onClose: () => void;
 }
 
-const AuthModals: React.FC<AuthModalsProps> = ({ initialView }) => {
+const AuthModals: React.FC<AuthModalsProps> = ({ initialView, onClose }) => {
   const [showSignIn, setShowSignIn] = useState<boolean>(initialView === 'signin');
   const [showSignUp, setShowSignUp] = useState<boolean>(initialView === 'signup');
   const navigate = useNavigate();
@@ -33,7 +33,8 @@ const AuthModals: React.FC<AuthModalsProps> = ({ initialView }) => {
   const closeModals = () => {
     setShowSignIn(false);
     setShowSignUp(false);
-    navigate('/'); // Navigate back to home or desired route
+    onClose();
+    navigate('/');
   };
 
   return (

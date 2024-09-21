@@ -1,8 +1,9 @@
-// src/auth/SignInModal.tsx
 import React, { useState } from 'react';
-import { X } from 'lucide-react'; // Ensure you have lucide-react installed or use any close icon
-import { auth, googleProvider, githubProvider, signInWithPopup, signInWithEmailAndPassword } from '../firebase';
+import { X } from 'lucide-react';
+import { auth, googleProvider, githubProvider } from '../firebase';
+import { signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { github, google } from '@/assets/images/images';
 
 interface SignInModalProps {
   onClose: () => void;
@@ -25,7 +26,7 @@ const SignInModal: React.FC<SignInModalProps> = ({ onClose, onSwitchToSignUp }) 
       await signInWithEmailAndPassword(auth, email, password);
       setError('');
       onClose();
-      navigate('/'); // Redirect to home or dashboard after sign-in
+      navigate('/');
     } catch (err: any) {
       setError(err.message);
     }
@@ -35,7 +36,7 @@ const SignInModal: React.FC<SignInModalProps> = ({ onClose, onSwitchToSignUp }) 
     try {
       await signInWithPopup(auth, googleProvider);
       onClose();
-      navigate('/'); // Redirect after successful sign-in
+      navigate('/');
     } catch (err: any) {
       setError(err.message);
     }
@@ -45,7 +46,7 @@ const SignInModal: React.FC<SignInModalProps> = ({ onClose, onSwitchToSignUp }) 
     try {
       await signInWithPopup(auth, githubProvider);
       onClose();
-      navigate('/'); // Redirect after successful sign-in
+      navigate('/');
     } catch (err: any) {
       setError(err.message);
     }
@@ -64,7 +65,7 @@ const SignInModal: React.FC<SignInModalProps> = ({ onClose, onSwitchToSignUp }) 
             className="flex items-center justify-start w-full border border-gray-300 p-2 rounded hover:bg-gray-100"
             onClick={handleGoogleSignIn}
           >
-            <img src="/google-logo.svg" alt="Google logo" className="mr-2 h-6 w-6" />
+            <img src={google} alt="Google logo" className="mr-2 h-6 w-6" />
             Sign in with Google
           </button>
           <button
@@ -72,10 +73,9 @@ const SignInModal: React.FC<SignInModalProps> = ({ onClose, onSwitchToSignUp }) 
             className="flex items-center justify-start w-full border border-gray-300 p-2 rounded hover:bg-gray-100"
             onClick={handleGithubSignIn}
           >
-            <img src="/github-logo.svg" alt="GitHub logo" className="mr-2 h-6 w-6" />
+            <img src={github} alt="GitHub logo" className="mr-2 h-6 w-6" />
             Sign in with GitHub
           </button>
-          {/* Add more social sign-in buttons if needed */}
           <div>
             <input
               type="email"

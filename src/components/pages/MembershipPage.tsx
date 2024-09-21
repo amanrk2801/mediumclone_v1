@@ -1,9 +1,13 @@
+// src/components/pages/MembershipPage.tsx
+
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckIcon, StarIcon } from "lucide-react";
+import { useDarkMode } from '../../contexts/DarkModeContext'; // Adjust the import path as necessary
 
 export default function MembershipPage() {
+  const { darkMode } = useDarkMode(); // Consume dark mode state
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
   const plans = [
@@ -37,33 +41,57 @@ export default function MembershipPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-serif mb-8">Membership plans</h1>
+    <div className={`container mx-auto px-4 py-8 ${darkMode ? 'bg-gray-900' : 'bg-white'}`}>
+      <h1 className={`text-4xl font-serif mb-8 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Membership Plans</h1>
       <div className="grid md:grid-cols-2 gap-8">
         {plans.map((plan) => (
-          <Card key={plan.name} className="flex flex-col h-full">
+          <Card 
+            key={plan.name} 
+            className={`flex flex-col h-full transition-colors duration-200 ${
+              darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+            }`}
+            shadow="md" // Assuming Card component accepts a shadow prop
+          >
             <CardHeader>
               <CardTitle className="flex items-center">
-                <StarIcon className="mr-2 h-6 w-6 text-yellow-400" />
-                {plan.name}
+                <StarIcon 
+                  className={`mr-2 h-6 w-6 ${darkMode ? 'text-yellow-400' : 'text-yellow-500'}`} 
+                />
+                <span className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  {plan.name}
+                </span>
               </CardTitle>
-              <p className="text-2xl font-bold">{plan.price}</p>
+              <p className={`text-2xl font-bold mt-2 ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
+                {plan.price}
+              </p>
             </CardHeader>
             <CardContent className="flex flex-col justify-between h-full">
               <ul className="space-y-2 mb-4">
                 {plan.features.map((feature, index) => (
                   <li key={index} className="flex items-center">
-                    <CheckIcon className="mr-2 h-4 w-4 text-green-500" />
-                    {feature}
+                    <CheckIcon 
+                      className={`mr-2 h-4 w-4 ${darkMode ? 'text-green-400' : 'text-green-500'}`} 
+                    />
+                    <span className={`text-gray-700 dark:text-gray-300`}>
+                      {feature}
+                    </span>
                   </li>
                 ))}
               </ul>
               <Button 
-                className={`w-full ${selectedPlan === plan.name ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'}`}
+                className={`w-full ${
+                  selectedPlan === plan.name
+                    ? darkMode 
+                      ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
+                      : 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                    : darkMode 
+                      ? 'bg-green-500 hover:bg-green-600 text-white' 
+                      : 'bg-green-600 hover:bg-green-700 text-white'
+                } transition-colors duration-200`}
                 onClick={() => handleSelectPlan(plan.name)}
                 disabled={selectedPlan === plan.name}
               >
-                {selectedPlan === plan.name ? 'Selected' : 'Get started'}
+                {selectedPlan === plan.name ? 'Selected' : 'Get Started'}
               </Button>
             </CardContent>
           </Card>

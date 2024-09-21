@@ -2,21 +2,24 @@
 import { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bold, Italic, Link, Type, Quote, ImageIcon } from "lucide-react"; // Added ImageIcon
-import medium from "../../assets/medium-icon.svg"; // Ensure correct path and extension
+import { Bold, Italic, Link, Type, Quote, Image as ImageIcon } from "lucide-react"; // Corrected ImageIcon import
+import mediumIcon from '../../assets/medium-icon.svg'; 
+import medium_white from '../../assets/medium-white.svg'; 
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { db, storage } from "../../firebase"; // Adjust the path as needed
-import ReactMarkdown from 'react-markdown'; // For rendering markdown
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Firebase Storage functions
-import { toast, ToastContainer } from 'react-toastify'; // For notifications
-import 'react-toastify/dist/ReactToastify.css'; // React Toastify CSS
+import { db, storage } from "../../firebase"; 
+import ReactMarkdown from 'react-markdown';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useDarkMode } from '@/contexts/DarkModeContext';
 
 export default function WritePage() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [uploading, setUploading] = useState(false); // State to manage upload status
+  const [uploading, setUploading] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null); // Ref for hidden file input
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { darkMode } = useDarkMode(); // Removed setDarkMode if not used
 
   // Handle formatting based on the selected format
   const handleFormatting = (format: string) => {
@@ -104,7 +107,7 @@ export default function WritePage() {
 
   // Trigger the hidden file input when the image button is clicked
   const triggerImageUpload = () => {
-    if (fileInputRef.current) {
+    if (fileInputRef.current && !uploading) {
       fileInputRef.current.click();
     }
   };
@@ -117,7 +120,7 @@ export default function WritePage() {
     }
 
     try {
-      const articlesCollection = collection(db, "articles"); // Ensure 'articles' is your desired collection name
+      const articlesCollection = collection(db, "articles");
       await addDoc(articlesCollection, {
         title,
         content,
@@ -139,7 +142,11 @@ export default function WritePage() {
 
       {/* Header Section */}
       <header className="flex justify-between items-center mb-8">
-        <img src={medium} alt="Medium Logo" className="h-12 w-12" />
+        <img 
+          src={darkMode ? medium_white : mediumIcon}  
+          alt="Medium Logo" 
+          className="h-12 w-12" 
+        />
         <Button 
           variant="outline" 
           onClick={handlePublish}
@@ -238,8 +245,8 @@ export default function WritePage() {
       {/* Markdown Preview */}
       <div className="mt-10">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Preview</h2>
-        <div className="prose p-6 rounded shadow-lg bg-white dark:bg-white transition-colors duration-200">
-          <ReactMarkdown className="text-gray-900 dark:text-gray-800">
+        <div className="prose p-6 rounded shadow-lg bg-white dark:bg-gray-800 transition-colors duration-200">
+          <ReactMarkdown className="text-gray-900 dark:text-gray-200">
             {content}
           </ReactMarkdown>
         </div>

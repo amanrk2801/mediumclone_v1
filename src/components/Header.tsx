@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Search, Moon, Sun } from "lucide-react";
-import UserMenu from "./UserMenu";
-import AuthModals from "../auth/AuthModals";
-import { useAuth } from "../contexts/AuthContext";
-import { useDarkMode } from "../contexts/DarkModeContext";
-import mediumIcon from "../assets/medium-icon.svg";
-import mediumWhite from "../assets/medium-white.svg";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Search, Moon, Sun } from 'lucide-react';
+import UserMenu from './UserMenu';
+import AuthModals from '../auth/AuthModals';
+import { useAuth } from '../contexts/AuthContext';
+import { useDarkMode } from '../contexts/DarkModeContext';
+import mediumIcon from '../assets/medium-icon.svg';
+import mediumWhite from '../assets/medium-white.svg';
 
 interface HeaderProps {
   searchOpen: boolean;
@@ -24,10 +24,10 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const { darkMode, setDarkMode } = useDarkMode();
   const [showAuthModals, setShowAuthModals] = useState(false);
-  const [authType, setAuthType] = useState<"signin" | "signup">("signin");
+  const [authType, setAuthType] = useState<'signin' | 'signup'>('signin');
   const { currentUser } = useAuth();
 
-  const handleAuthClick = (type: "signin" | "signup") => {
+  const handleAuthClick = (type: 'signin' | 'signup') => {
     setAuthType(type);
     setShowAuthModals(true);
   };
@@ -40,38 +40,27 @@ const Header: React.FC<HeaderProps> = ({
     <header className="border-b bg-white dark:bg-gray-800 transition-colors duration-200">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link to="/" className="flex items-center">
-          <img
-            src={darkMode ? mediumWhite : mediumIcon}
-            alt="Medium Logo"
-            className="h-10 w-10 mr-2"
+          <img 
+            src={darkMode ? mediumWhite : mediumIcon} 
+            alt="Medium Logo" 
+            className="h-10 w-10 mr-2" 
           />
-          <span className="text-3xl font-bold text-black dark:text-white">
-            Medium
-          </span>
+          <span className="text-3xl font-bold text-black dark:text-white">Medium</span>
         </Link>
 
         <nav className="hidden md:flex space-x-4">
-          <Link
-            to="/our-story"
-            className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-          >
+          <Link to="/our-story" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
             Our Story
           </Link>
-          <Link
-            to="/membership-plans"
-            className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-          >
+          <Link to="/membership-plans" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
             Membership
           </Link>
-          <Link
-            to="/write"
-            className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-          >
+          <Link to="/write" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
             Write
           </Link>
           {!currentUser && (
             <button
-              onClick={() => handleAuthClick("signin")}
+              onClick={() => handleAuthClick('signin')}
               className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
               aria-label="Sign In"
             >
@@ -87,38 +76,27 @@ const Header: React.FC<HeaderProps> = ({
             onClick={() => setSearchOpen(!searchOpen)}
             aria-label="Search"
           >
-            <Search
-              className={`h-5 w-5 ${darkMode ? "text-white" : "text-black"}`}
-            />
+            <Search className={`${darkMode ? 'text-white' : 'text-black'}`} style={{ height: '20px', width: '20px' }} />
           </Button>
 
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setDarkMode(!darkMode)}
-            aria-label={
-              darkMode ? "Switch to light mode" : "Switch to dark mode"
-            }
+            aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
           >
-            {darkMode ? (
-              <Sun className="h-5 w-5 text-white" />
-            ) : (
-              <Moon className="h-5 w-5 " />
-            )}
+            {darkMode ? <Sun className="text-white" style={{ height: '20px', width: '20px' }} /> : <Moon className="text-black" style={{ height: '20px', width: '20px' }} />}
           </Button>
 
           {currentUser && (
-            <UserMenu
-              userMenuOpen={userMenuOpen}
-              setUserMenuOpen={setUserMenuOpen}
-            />
+            <UserMenu userMenuOpen={userMenuOpen} setUserMenuOpen={setUserMenuOpen} />
           )}
 
           {!currentUser && (
             <Button
               variant="default"
               className="bg-black dark:bg-white text-white dark:text-black rounded-full px-4 py-2 transition-colors duration-200 hover:bg-gray-900 dark:hover:bg-gray-200"
-              onClick={() => handleAuthClick("signup")}
+              onClick={() => handleAuthClick('signup')}
               aria-label="Get Started"
             >
               Get Started
@@ -132,6 +110,6 @@ const Header: React.FC<HeaderProps> = ({
       )}
     </header>
   );
-};
+}
 
 export default Header;

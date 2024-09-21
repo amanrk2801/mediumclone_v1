@@ -1,8 +1,7 @@
-// src/pages/WritePage.tsx
 import { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bold, Italic, Link, Type, Quote, Image as ImageIcon } from "lucide-react"; // Corrected ImageIcon import
+import { Bold, Italic, Link, Type, Quote, Image as ImageIcon } from "lucide-react"; 
 import mediumIcon from '../../assets/medium-icon.svg'; 
 import medium_white from '../../assets/medium-white.svg'; 
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
@@ -19,9 +18,8 @@ export default function WritePage() {
   const [uploading, setUploading] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { darkMode } = useDarkMode(); // Removed setDarkMode if not used
+  const { darkMode } = useDarkMode(); 
 
-  // Handle formatting based on the selected format
   const handleFormatting = (format: string) => {
     let newContent = content;
     const cursorPosition = textareaRef.current?.selectionStart || 0;

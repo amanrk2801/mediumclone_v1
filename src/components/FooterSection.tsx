@@ -1,11 +1,9 @@
-// src/components/FooterSection.tsx
-
 import React, { ReactNode } from 'react';
 
 interface FooterSectionProps {
   title: string;
   children: ReactNode;
-  titleClassName?: string; // Optional prop for title styling
+  titleClassName?: string; 
 }
 
 const FooterSection: React.FC<FooterSectionProps> = ({ title, children, titleClassName = '' }) => {

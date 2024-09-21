@@ -1,5 +1,3 @@
-// src/components/pages/ProfilePage.tsx
-
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { updateProfile as firebaseUpdateProfile, storage, ref, uploadBytes, getDownloadURL } from '../../firebase';
@@ -46,7 +44,7 @@ const ProfilePage: React.FC = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { 'image/*': [] }, // Corrected accept prop
+    accept: { 'image/*': [] }, 
     multiple: false,
   });
 

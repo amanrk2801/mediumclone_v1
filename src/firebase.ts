@@ -1,4 +1,3 @@
-// src/firebase.ts
 import { initializeApp } from 'firebase/app';
 import {
   getAuth,
@@ -10,8 +9,8 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
 } from 'firebase/auth';
-import { getFirestore, collection, addDoc, Timestamp } from 'firebase/firestore'; // Import Firestore functions
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'; // Import Storage functions
+import { getFirestore, collection, addDoc, Timestamp } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'; 
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -47,11 +46,11 @@ export {
   createUserWithEmailAndPassword,
   signOut,
   updateProfile,
-  db, // Export Firestore instance
-  collection, // Export Firestore collection function
-  addDoc, // Export Firestore addDoc function
-  Timestamp, // Export Firestore Timestamp
-  storage, // Export Storage instance
+  db, 
+  collection, 
+  addDoc, 
+  Timestamp, 
+  storage, 
   ref,
   uploadBytes,
   getDownloadURL,

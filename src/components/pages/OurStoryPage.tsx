@@ -1,12 +1,10 @@
-// src/components/pages/OurStoryPage.tsx
-
 import { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link for client-side routing
-import { useDarkMode } from '../../contexts/DarkModeContext'; // Adjust the import path as necessary
+import { Link } from 'react-router-dom'; 
+import { useDarkMode } from '../../contexts/DarkModeContext'; 
 
 export default function OurStoryPage() {
   const [showMore, setShowMore] = useState(false);
-  const { darkMode } = useDarkMode(); // Consume dark mode state
+  const { darkMode } = useDarkMode(); 
 
   return (
     <div

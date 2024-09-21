@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import FooterSection from './FooterSection';
-import { useDarkMode } from '../contexts/DarkModeContext'; // Import the hook
+import { useDarkMode } from '../contexts/DarkModeContext'; 
 
 export default function Footer() {
-  const { darkMode } = useDarkMode(); // Destructure darkMode from context
+  const { darkMode } = useDarkMode(); 
 
   const exploreLinks = [
     { name: 'About', path: '/about' },

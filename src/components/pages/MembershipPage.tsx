@@ -1,13 +1,11 @@
-// src/components/pages/MembershipPage.tsx
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckIcon, StarIcon } from "lucide-react";
-import { useDarkMode } from '../../contexts/DarkModeContext'; // Adjust the import path as necessary
+import { useDarkMode } from '../../contexts/DarkModeContext';
 
 export default function MembershipPage() {
-  const { darkMode } = useDarkMode(); // Consume dark mode state
+  const { darkMode } = useDarkMode(); 
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
   const plans = [
@@ -50,7 +48,7 @@ export default function MembershipPage() {
             className={`flex flex-col h-full transition-colors duration-200 ${
               darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
             }`}
-            shadow="md" // Assuming Card component accepts a shadow prop
+            shadow="md" 
           >
             <CardHeader>
               <CardTitle className="flex items-center">

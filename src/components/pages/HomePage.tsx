@@ -1,4 +1,3 @@
-// src/components/pages/HomePage.tsx
 import React from 'react';
 import FeaturedArticle from '../FeaturedArticle';
 import LatestArticles from '../LatestArticles';

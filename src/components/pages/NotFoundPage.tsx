@@ -1,4 +1,3 @@
-// src/components/pages/NotFoundPage.tsx
 import { Link } from 'react-router-dom';
 
 const NotFoundPage: React.FC = () => {

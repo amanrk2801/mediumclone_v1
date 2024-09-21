@@ -1,4 +1,3 @@
-// src/components/pages/Logout.tsx
 import React, { useEffect } from 'react';
 import { auth } from '../../firebase'
 import { signOut } from 'firebase/auth';
@@ -11,7 +10,7 @@ const Logout: React.FC = () => {
     const performLogout = async () => {
       try {
         await signOut(auth);
-        navigate('/'); // Redirect to home after logout
+        navigate('/');
       } catch (err) {
         console.error('Error signing out:', err);
       }
@@ -20,7 +19,7 @@ const Logout: React.FC = () => {
     performLogout();
   }, [navigate]);
 
-  return null; // Optionally, you can show a loading indicator
+  return null; 
 };
 
 export default Logout;

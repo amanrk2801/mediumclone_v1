@@ -1,12 +1,8 @@
-// src/components/ui/Card.tsx
-
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-// Define allowed shadow variants
 type ShadowVariant = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
-// Extend the default HTML attributes to include the 'shadow' prop
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   shadow?: ShadowVariant;
 }
